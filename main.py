@@ -1,28 +1,27 @@
 import requests
 from tkinter import *
+from PIL import Image, ImageTk  # Resimleri göstermek için Pillow kütüphanesi
+from io import BytesIO
+import random
 
 #Fonksiyonlar
 # Pokémon verisini API'den çekme fonksiyonu
-def get_pokemon(name):
-    # API URL'ini oluşturuyoruz (girilen ismi küçük harfe çeviriyoruz)
-    url=f"https://pokeapi.co/api/v2/pokemon/{name.lower()}"
-    response= requests.get(url)
-
+def get_random_pokemon():
+    # Rastgele ID seçiyoruz (1-898)
+    rand_id = random.randint(1, 898)
+    url = f"https://pokeapi.co/api/v2/pokemon/{rand_id}"
+    response = requests.get(url)
     if response.status_code != 200:
-        print("Pokemon bulunamdaı")
-        return None
-
+        return get_random_pokemon()  # Hatalı ID olursa tekrar dene
     data = response.json()
-
-    stats = {
+    return {
         "name": data["name"],
         "hp": data["stats"][0]["base_stat"],
         "attack": data["stats"][1]["base_stat"],
         "defense": data["stats"][2]["base_stat"],
-        "speed": data["stats"][5]["base_stat"]
-     }   
-
-    return stats
+        "speed": data["stats"][5]["base_stat"],
+        "sprite": data["sprites"]["front_default"]
+    }
 
 #Hasar Hesaplama 
 def calculate_damage(attacker ,defender ):
@@ -30,20 +29,30 @@ def calculate_damage(attacker ,defender ):
     #hasar minimum ve 1 olmalı -li olmaması için ve tam sayıya çevirdik.
     return max(1, int(damage))
 
-# ----------------------------------------
+
+def load_image(url, size=(120,120)):
+    response = requests.get(url)
+    img_data = Image.open(BytesIO(response.content))
+    img_data = img_data.resize(size)
+    return ImageTk.PhotoImage(img_data)
+
 # Savaş fonksiyonu
-# ----------------------------------------
 def battle():
     text_output.delete("1.0",END) #önceki sonucu temizliyoruz
-    p1_name = entry_pokemon1.get().strip()
-    p2_name =entry_pokemon2.get().strip()
-
-    p1= get_pokemon(p1_name)
-    p2= get_pokemon(p2_name)
+   
+    p1= get_random_pokemon()
+    p2= get_random_pokemon()
 
     if not p1 or not p2:
         text_output.insert(END, "Hatalı Pokemon adi!\n")
         return
+
+    # Resimleri yükle ve GUI'de göster
+    global img1, img2  # Tkinter için referans kaybolmaması gerekiyor
+    img1 = load_image(p1["sprite"])
+    img2 = load_image(p2["sprite"])
+    label_p1.config(image=img1)
+    label_p2.config(image=img2)
 
     hp1 = p1["hp"]# p1’in başlangıç HP’si
     hp2 = p2["hp"]# p2’in başlangıç HP’si
@@ -77,26 +86,25 @@ def battle():
 # --------------- GUI -----------------
 window = Tk()
 window.title("Pokémon Battle Simulator")
-window.geometry("500x400")
+window.geometry("700x600")
 window.config(padx=20, pady=20)
 
 # Başlık
-Label(window, text="Pokémon Battle Simulator", font=("Arial", 16, "bold")).pack(pady=10)
-
-# Pokémon girişleri
-entry_pokemon1 = Entry(window, width=20)
-entry_pokemon1.pack(pady=5)
-entry_pokemon1.insert(0, "pikachu")  # Örnek başlangıç
-
-entry_pokemon2 = Entry(window, width=20)
-entry_pokemon2.pack(pady=5)
-entry_pokemon2.insert(0, "charizard")  # Örnek başlangıç
+Label(window, text="Pokémon Battle Simulator", font=("Arial", 20, "bold")).pack(pady=15)
 
 # Savaştır butonu
 Button(window, text="Savaştır", command=battle).pack(pady=10)
 
+# Pokémon resimleri için label
+frame_images = Frame(window)
+frame_images.pack(pady=20)
+label_p1 = Label(frame_images)
+label_p1.pack(side=LEFT, padx=40)
+label_p2 = Label(frame_images)
+label_p2.pack(side=RIGHT, padx=40)
+
 # Sonuç alanı
-text_output = Text(window, height=15, width=60)
+text_output = Text(window, height=25, width=80)
 text_output.pack(pady=10)
 
 window.mainloop()
