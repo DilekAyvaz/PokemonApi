@@ -1,6 +1,4 @@
-from pstats import Stats
 import requests
-from urllib3 import response
 from tkinter import *
 
 #Fonksiyonlar
@@ -26,11 +24,6 @@ def get_pokemon(name):
 
     return stats
 
-pikachu = get_pokemon("pikachu")
-print(pikachu)
-
-
-
 #Hasar Hesaplama 
 def calculate_damage(attacker ,defender ):
     damage = attacker ["attack"] - (defender["defense"]/2)
@@ -42,8 +35,8 @@ def calculate_damage(attacker ,defender ):
 # ----------------------------------------
 def battle():
     text_output.delete("1.0",END) #önceki sonucu temizliyoruz
-    p1_name = entry_pokemon1.get()
-    p2.name =entry_pokemon2.get()
+    p1_name = entry_pokemon1.get().strip()
+    p2_name =entry_pokemon2.get().strip()
 
     p1= get_pokemon(p1_name)
     p2= get_pokemon(p2_name)
@@ -81,3 +74,29 @@ def battle():
             text_output.insert(END, f"\n🏆 Kazanan: {second['name']}!\n")
             return
 
+# --------------- GUI -----------------
+window = Tk()
+window.title("Pokémon Battle Simulator")
+window.geometry("500x400")
+window.config(padx=20, pady=20)
+
+# Başlık
+Label(window, text="Pokémon Battle Simulator", font=("Arial", 16, "bold")).pack(pady=10)
+
+# Pokémon girişleri
+entry_pokemon1 = Entry(window, width=20)
+entry_pokemon1.pack(pady=5)
+entry_pokemon1.insert(0, "pikachu")  # Örnek başlangıç
+
+entry_pokemon2 = Entry(window, width=20)
+entry_pokemon2.pack(pady=5)
+entry_pokemon2.insert(0, "charizard")  # Örnek başlangıç
+
+# Savaştır butonu
+Button(window, text="Savaştır", command=battle).pack(pady=10)
+
+# Sonuç alanı
+text_output = Text(window, height=15, width=60)
+text_output.pack(pady=10)
+
+window.mainloop()
