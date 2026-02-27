@@ -64,23 +64,23 @@ def battle():
         first, second = p2, p1
         hp_first, hp_second = hp2, hp1
 
-    text_output.insert(END, f"İlk saldıran: {first['name']}\n\n")
+    text_output.insert(END, f"İlk saldıran: {first['name']}\n\n","center")
 
     while hp_first > 0 and hp_second > 0:
         dmg = calculate_damage(first, second)
         hp_second -= dmg
-        text_output.insert(END, f"{first['name']} {dmg} hasar verdi! ({second['name']} HP: {max(0, hp_second)})\n")
+        text_output.insert(END, f"{first['name']} {dmg} hasar verdi! ({second['name']} HP: {max(0, hp_second)})\n","center")
 
         if hp_second <= 0:
-            text_output.insert(END, f"\n🏆 Kazanan: {first['name']}!\n")
+            text_output.insert(END, f"\n🏆 Kazanan: {first['name']}!\n","center")
             return
 
         dmg = calculate_damage(second, first)
         hp_first -= dmg
-        text_output.insert(END, f"{second['name']} {dmg} hasar verdi! ({first['name']} HP: {max(0, hp_first)})\n\n")
+        text_output.insert(END, f"{second['name']} {dmg} hasar verdi! ({first['name']} HP: {max(0, hp_first)})\n\n","center")
 
         if hp_first <= 0:
-            text_output.insert(END, f"\n🏆 Kazanan: {second['name']}!\n")
+            text_output.insert(END, f"\n🏆 Kazanan: {second['name']}!\n","center")
             return
 
 # --------------- GUI -----------------
@@ -90,10 +90,10 @@ window.geometry("700x600")
 window.config(padx=20, pady=20)
 
 # Başlık
-Label(window, text="Pokémon Battle Simulator", font=("Arial", 20, "bold")).pack(pady=15)
+Label(window, text="Pokémon Battle Simulator", font=("Marker felt", 30, "bold")).pack(pady=15)
 
 # Savaştır butonu
-Button(window, text="Savaştır", command=battle).pack(pady=10)
+Button(window, text="Savaştır",font=("Marker felt", 21, "bold"), command=battle).pack(pady=10)
 
 # Pokémon resimleri için label
 frame_images = Frame(window)
@@ -104,7 +104,13 @@ label_p2 = Label(frame_images)
 label_p2.pack(side=RIGHT, padx=40)
 
 # Sonuç alanı
-text_output = Text(window, height=25, width=80)
+# Log alanı için ayrı frame
+frame_log = Frame(window)
+frame_log.pack(expand=True)
+
+text_output = Text(window, height=25, width=80,font=("Marker felt", 21, "bold"))
 text_output.pack(pady=10)
+text_output.tag_configure("center", justify="center")
+
 
 window.mainloop()
