@@ -1,11 +1,27 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon🎮</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Pokemon Battle</title>
 </head>
 <body>
-    
+    <h1>Pokemon Battle</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Savaştır</button>
+    </form>
+    <div class="battle-area">
+        <div class="pokemon">
+            <h2>{{ p1.name }}</h2>
+            <img src="{{ p1.sprite }}">
+        </div>
+    </div>
+    <div class="logs">
+        {% for log in logs %}
+            <p>{{ log }}</p>
+        {% endfor %}
+        <h2>🏆 Kazanan: {{ winner }}</h2>
+    </div>
 </body>
 </html>
