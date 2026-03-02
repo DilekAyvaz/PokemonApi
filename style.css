@@ -1,0 +1,100 @@
+/* Genel Sayfa Ayarları */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #ff0000, #3b4cca);
+    color: white;
+    text-align: center;
+}
+
+/* Başlık */
+h1 {
+    font-size: 48px;
+    margin-top: 30px;
+    text-shadow: 3px 3px 0 #000;
+}
+
+/* Buton */
+button {
+    background-color: #ffcc00;
+    color: #2a2a2a;
+    border: none;
+    padding: 15px 40px;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 0 #b38f00;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 #b38f00;
+}
+
+button:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #b38f00;
+}
+
+/* Battle Alanı */
+.battle-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    gap: 100px;
+}
+
+/* Pokemon Kartı */
+.pokemon {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+}
+
+.pokemon:hover {
+    transform: scale(1.05);
+}
+
+/* Pokemon İsmi */
+.pokemon h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+}
+
+/* Pokemon Resmi */
+.pokemon img {
+    width: 180px;
+    height: 180px;
+    image-rendering: pixelated;
+}
+
+/* Log Alanı */
+.logs {
+    margin: 50px auto;
+    width: 60%;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+}
+
+.logs p {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.logs h2 {
+    margin-top: 20px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 0 black;
+}
