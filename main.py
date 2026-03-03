@@ -107,6 +107,9 @@ label_p2.pack(side=RIGHT, padx=40)
 # Log alanı için ayrı frame
 frame_log = Frame(window)
 frame_log.pack(expand=True)
+text_output = Text(frame_log, height=25, width=80,font=("Marker felt", 21, "bold"))
+text_output.pack(expand=True, fill=BOTH)
+text_output.tag_configure("center", justify="center")
 
 text_output = Text(window, height=25, width=80,font=("Marker felt", 21, "bold"))
 text_output.pack(pady=10)

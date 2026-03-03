@@ -79,6 +79,7 @@ button:active {
 /* Log Alanı */
 .logs {
     margin: 50px auto;
+    text-align: left;
     width: 60%;
     background: rgba(0, 0, 0, 0.4);
     padding: 20px;
