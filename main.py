@@ -111,9 +111,5 @@ text_output = Text(frame_log, height=25, width=80,font=("Marker felt", 21, "bold
 text_output.pack(expand=True, fill=BOTH)
 text_output.tag_configure("center", justify="center")
 
-text_output = Text(window, height=25, width=80,font=("Marker felt", 21, "bold"))
-text_output.pack(pady=10)
-text_output.tag_configure("center", justify="center")
-
 
 window.mainloop()
